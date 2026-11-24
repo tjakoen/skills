@@ -1,0 +1,93 @@
+---
+name: claude-starter
+description: "Read this BEFORE writing the CLAUDE.md for a new repo, and the first time an existing repo is wired into these standards. It is a template to copy and fill, not prose to summarize: keep the pointers to the published standards and never fork a standard's content into the new file. Don't skip because the repo is small, private, or \"just a prototype\" - the wiring costs one file, and it is the thing that makes every later session in that repo cheap."
+---
+
+<!-- pantry:skills-sync -->
+> Generated view of `standards/CLAUDE.starter.md` in the portfolio canon. Edit it there, not here:
+> `pantry skills sync` rewrites this file and any local edit is lost. Relative links below
+> resolve from `standards/`.
+
+# CLAUDE.md: <PROJECT NAME>
+
+> **Starter template.** Copy this to the root of a new repo as `CLAUDE.md`, delete this line, and
+> fill the `<…>` placeholders. It wires a fresh project into Tjakoen's personal standards (how I build
+> with AI, voice, badges, AI-use posture) from day one. The standards live publicly at
+> `https://portfolio.tjakoen.com/standards` (source: the [`standards/`](https://github.com/tjakoen/tjakoen.github.io/tree/main/standards)
+> dir in the portfolio repo) —
+> **reference them, don't fork them.** The published [index](https://portfolio.tjakoen.com/standards)
+> is the map; point this repo at it rather than copying files that will drift.
+>
+> **Make it tool-agnostic.** Symlink `AGENTS.md → CLAUDE.md` (`ln -s CLAUDE.md AGENTS.md`) so any
+> agent that reads the cross-tool `AGENTS.md` convention (Codex, Cursor, Copilot, Gemini CLI, …) gets
+> the same instructions Claude Code reads from `CLAUDE.md`. One file, every tool.
+
+## What this is
+
+<One paragraph: what this project is, who it's for, and the single most important thing to know
+before touching it.>
+
+## How I work here (non-negotiables)
+
+The full rulebook is **[`AI-DEVELOPMENT.md`](https://portfolio.tjakoen.com/standards/ai-development)**
+(the standards) + **[`SESSION-LOOP.md`](https://portfolio.tjakoen.com/standards/session-loop)** (the
+session mechanics, memory, handoff, model economy). The short version for this repo:
+
+- **I build with AI, out loud, on purpose.** The work is co-authored with Claude as a *practice* —
+  not a git trailer (see the commit convention below; no `Co-Authored-By` lines). The receipt is the
+  README badge + footer and the flagship note, not commit metadata.
+- **AI multiplies, it doesn't add.** The AI types; I engineer. I keep the judgment, the architecture,
+  and the final call. If I can't explain it, I didn't build it.
+- **Definition of done = code + tests + docs synced + green gate.** <Name the check/test commands for
+  this repo.> Not one of these — all of them.
+- **Write the decision down.** Keep a short record of *why* non-obvious choices were made so the next
+  session inherits the reasoning instead of relitigating it (format: SESSION-LOOP §4).
+- **Hand off when a task finishes.** Gate green, committed, decisions recorded → emit a compact
+  handoff prompt for the next session (SESSION-LOOP §5).
+
+## Voice (for any prose in my name)
+
+Follow **[VOICE.md](https://portfolio.tjakoen.com/standards/voice)**. The short
+version: honest, quirky, self-deprecating, concrete, opinionated-with-the-why; **no backticks in
+prose**; contractions in casual writing, expanded in formal docs. Never publish a claim I haven't
+earned; keep money vague.
+
+## README presentation (do this once, at repo start)
+
+Follow **[README-STANDARD.md](https://portfolio.tjakoen.com/standards/readme-standard)**. In short:
+
+1. **Title emoji.** One emoji before the H1 that fits this repo (my repos lean a bread/baking family).
+2. **A curated badge row** (~5–7, honesty rule: only true, ideally verifiable badges), always led by:
+   `[![Made with Claude, Codex and DeepSeek](https://img.shields.io/badge/Made_with-Claude_%C2%B7_Codex_%C2%B7_DeepSeek-D97757)](https://portfolio.tjakoen.com/notes/ten-times-zero)`
+3. **The text footer** at the bottom of the README:
+   > ---
+   > 🤖 **Built with Claude, Codex and DeepSeek. I don't prompt and pray, I prompt and prove.** Every change here was made with an AI, on purpose, and every commit carries my name. [How I actually work with AI, receipts and all →](https://portfolio.tjakoen.com/notes/ten-times-zero)
+
+The fastest way: paste the "reusable prompt" from README-STANDARD.md into a Claude session here, and it reads this
+codebase and proposes the emoji + honest badge set for you.
+
+## Commit convention
+
+No AI attribution trailers on commits (`Co-Authored-By: Claude` etc.). The receipt behind the
+"built with Claude" claim is the README badge + footer and the flagship note, not commit metadata.
+
+**Enforce it, do not assume it.** Set this in `~/.claude/settings.json`:
+
+```json
+{ "includeCoAuthoredBy": false }
+```
+
+Claude Code appends the trailer by default, so without that key an agent will add it while
+believing it is following house style. This paragraph used to say the rule was "enforced globally
+via `attribution` settings" and named no setting. It was set on no machine, so the rule quietly did
+not hold: one repo accumulated 28 trailered commits before anyone noticed, and clearing them meant
+rewriting published history. A convention that names no mechanism is a preference, not enforcement.
+
+Check a repo with `git log -E --grep="^Co-Authored-By:" --oneline` before trusting it is clean.
+Anchor the pattern to the line start: unanchored, it also matches any doc that merely *names* the
+trailer, this section included, so a clean repo reports itself dirty.
+
+## Docs / structure
+
+<List this repo's key files and where the important docs live. If it grows past a couple of root
+docs, group them under `docs/` and keep only `README.md` + `CLAUDE.md` at the root.>

@@ -1,0 +1,246 @@
+---
+name: figures
+description: "Read this BEFORE drawing the first shape of any figure that will ship: a chart, a graph, a timeline, a ratio, an architecture diagram, a flow, a loop, a pipeline. It gives the two inline-SVG scaffolds to copy, the token palette, the type scale, and the rule that no figure publishes without an accessible name. Don't skip because it is \"just a quick diagram\" or because a mermaid fence is faster to type - a freehanded figure will not match the family, and a mermaid fence without a label is refused and degrades to a code block rather than rendering."
+---
+
+<!-- pantry:skills-sync -->
+> Generated view of `standards/FIGURES.md` in the portfolio canon. Edit it there, not here:
+> `pantry skills sync` rewrites this file and any local edit is lost. Relative links below
+> resolve from `standards/`.
+
+# Figures & visualizations: the standard
+
+> The standard for every diagram and chart in Tjakoen's notes, docs, and pages. Companion to
+> [`VOICE.md`](VOICE.md) (which owns the prose); this file owns the pictures. The point is that a
+> figure should be built to a **contract**, not hand-drawn from zero each time. Every figure here is
+> **inline SVG**, built to one of two scaffolds, so it renders on the published no-build site with zero
+> dependencies and every figure is a member of the same family: you re-skin them all by editing tokens,
+> never by editing shapes. Same philosophy as the rest of the stack: tokens are the theme, DRY to a
+> fault, design tells the truth.
+
+## Three figure shapes, two media (the one rule)
+
+**A figure that has state is HTML. A figure that does not is inline SVG.** That is the whole
+decision, and it was settled on 2026-08-18 after the fourth attempt at a note whose figures had to
+work at reading size and at the back of a room.
+
+| The figure is… | Build it as | Why |
+|---|---|---|
+| **Something a reader can change** (a dial, a toggle, a cursor, a run) | **HTML + CSS**, in a shared module, mounted by both the post and the deck | An SVG viewBox fixes proportions to whatever the author guessed. HTML scales with its container, so one figure serves a paragraph and a projector without two drawings, and the state lives where state belongs. |
+| **Quantitative data-viz** (bars, ratios, timelines, the multiplier) | the **data-viz scaffold** below | Precise proportions, exact labels, one fixed measure down the page; it carries its own palette so it looks identical everywhere, even committed as an image. |
+| **A flow, loop, relationship, or architecture** (steps, cycles, one box into the next) | the **flow scaffold** below | It sizes to its own content and themes with the site (it inverts in dark), so a diagram reads as part of the page it lives on. |
+
+**What changed, and what did not.** The earlier rule said "everything is inline SVG", with a live
+version allowed only as a progressive enhancement layered over a static one. That inverted in
+practice: on `notes/build-the-floor.md` five of six figures are HTML and the fallback is a sentence
+of prose rather than a second drawing, because maintaining a picture and its interactive twin means
+they drift. **The fallback rule still stands in spirit: what the server sends must argue the point
+by itself.** For an HTML figure that means the host wraps a real sentence describing what the figure
+shows, not an empty div. No-JS, print, a crawler and the static export all still get the argument.
+
+**Where the live modules live.** `scripts/figure-*.js`, one mount per figure, registered in
+`scripts/figures.js` for prose and imported by the deck's own driver for slides. The behaviour is
+written once so a slide and a paragraph cannot argue two different things from the same picture.
+Every mount returns `false` on unexpected markup so the caller can restore the fallback.
+
+**Status is weight, not hue.** `--color-accent` resolves to ink in this theme, so colour carries no
+signal. Filled, hollow and faint are the three states available, and they mean something: filled is
+done or counted, hollow is present but unabsorbed, faint is not yet.
+
+Which of the two SVG scaffolds you copy, when SVG is still right, is decided by what the figure *is*:
+
+| The figure is… | Copy | Palette | Why |
+|---|---|---|---|
+| **Quantitative data-viz** — bars, ratios, timelines, the multiplier | the **data-viz scaffold** below | self-contained e-ink palette, hardcoded on the root | Precise proportions, exact labels, one fixed measure down the page; it carries its own palette so it looks identical everywhere, even committed as an image. |
+| **A flow, loop, relationship, or architecture** — steps, cycles, "A → B → C" | the **flow scaffold** below | inherits the page's `--color-*` theme tokens | It sizes to its own content and themes with the site (it inverts in dark), so a diagram reads as part of the page it lives on, not a pasted-in light rectangle. |
+
+**On mermaid.** For most of this standard's life it could not be published at all: the site ships
+zero framework JS, MILL had no server-side renderer, and a mermaid block that looked right in an
+editor preview arrived **blank on the live site**. Practice converged on hand-built flow SVGs, and
+that is still the default. **This changed on 2026-08-16.** MILL renders a mermaid fence to inline
+SVG on the server, styled with the page's own theme tokens, and since mill 0.4.0 the fence has to
+carry a label saying in words what the diagram shows. A fence with no label is refused, warned
+about, and degraded to a code block, which is why an unlabelled diagram cannot reach a page by
+accident. Reach for the flow scaffold first anyway: a hand-built flow is smaller, it needs no
+render step, and it is the family the rest of the site is drawn in. Mermaid earns its place when a
+diagram is generated rather than drawn. Don't reach for it to chart a proportional bar either, that has
+always been an SVG.
+
+## The data-viz scaffold (copy this, don't freehand)
+
+Every data-viz SVG starts from this exact skeleton. The palette lives **once**, as CSS custom
+properties on the `<svg>` root; every shape and label references a token via `style="…:var(--x)"`.
+Change a color in one place and the whole figure re-skins. No hardcoded hex below the root.
+
+```html
+<svg viewBox="0 0 620 H" width="100%" role="img"
+     aria-label="State the actual data here, in words (a screen reader reads this, not the bars)."
+     style="max-width:560px;height:auto;font-family:Georgia,'Times New Roman',serif;
+            --paper:#faf7f1;--edge:#e6ddd0;--ink:#2b2b2b;--muted:#6b6259;--bar:#cbc1b3;--accent:#d97757"
+     xmlns="http://www.w3.org/2000/svg">
+  <rect x="0.5" y="0.5" width="619" height="H-1" style="fill:var(--paper);stroke:var(--edge)"/>
+  <text x="28" y="30" style="fill:var(--muted);font-size:15px">Figure title</text>
+  <!-- bars, ticks, labels — all reference tokens, never literal hex -->
+  <text x="28" y="H-12" style="fill:var(--accent);font-size:13px">The single payoff line.</text>
+</svg>
+```
+
+### The tokens (the palette, single source)
+
+| Token | Value | Role |
+|---|---|---|
+| `--paper` | `#faf7f1` | warm background |
+| `--edge` | `#e6ddd0` | hairline frame |
+| `--ink` | `#2b2b2b` | primary bars + emphatic labels |
+| `--muted` | `#6b6259` | titles, secondary labels, values |
+| `--bar` | `#cbc1b3` | the *lesser* bar (the thing being out-measured) |
+| `--accent` | `#d97757` | coral, **used exactly once**, on the payoff line |
+
+### The type scale
+
+Serif always (Georgia / Times, set once on the root and inherited). Sizes: **title 15**, **label 14**,
+**value 12.5**, **payoff note 13**. Nothing else.
+
+### Non-negotiables
+
+- **Canvas is `0 0 620 H`**, `width="100%"`, `max-width:560px`. Vary only the height `H`. This keeps
+  every figure the same measure down the page and responsive by default.
+- **`role="img"` + an `aria-label` that states the data in words.** The figure is decorative to a
+  screen reader without it; the label *is* the accessible figure. (AI-legible ≈ agent-affordance ≈
+  a11y, same coin.)
+- **One accent, one payoff line.** The coral appears once. If two things are "the point," neither is.
+- **Self-contained.** No external assets, no `<image>`, no web fonts. It must survive the static export.
+- **No `<style>` block, and no script inside the figure.** Tokens go on the root's `style` attribute
+  (widely honored); a `<style>` element risks being stripped by markdown sanitizers, and a figure
+  that needs script to mean anything is not a figure, it is an app.
+- **Follow it with a one-line italic caption** in the prose (`*The inversion: …*`), like the reference figure.
+
+### A figure may be upgraded, never replaced
+
+An earlier version of this rule said "no client JS" and gave as its reason that script would break
+the zero-framework-JS promise. That promise is about frameworks. A note page on this site already
+ships a dozen small vanilla islands, and one more of that shape is not the thing the rule was
+protecting against.
+
+So a figure that also exists as a live thing (the multiplier, which the talk lets you drag) may be
+**progressively enhanced**, under three conditions that are not negotiable:
+
+1. **The static figure is what gets served.** It sits in the markup, built to the scaffold above. The
+   island replaces it afterwards, or does not run at all.
+2. **The static one stands alone.** No-JS, print, a crawler and the static export all keep a figure
+   that argues the whole point by itself. If the interactive version says something the static one
+   cannot, the static one is unfinished.
+3. **The island lives in the app, never in the figure.** No `<script>` in the markdown. The upgrade
+   is opt-in through a `data-live-figure` hook, and a failed or unknown builder restores what was
+   there.
+
+Reference: `scripts/figures.js` and `view/components/molecules/live-figure/`, which serve the same
+widget to a slide and to a paragraph so the talk and the post cannot drift into two different
+pictures of one argument.
+
+## The flow scaffold (steps, loops, relationships)
+
+A flow is structural, not quantitative, so it does the opposite of the data-viz figure on one point:
+it **inherits the page's theme tokens** instead of carrying its own palette, so it themes with the
+site and inverts in dark. It reads `--color-fg` (nodes + node labels), `--color-bg` (the page behind
+it, used for label halos and for text on a filled node), `--color-line` (node borders), and
+`--color-muted` (arrows, the arrowhead marker, secondary sub-labels). Never hardcode hex.
+
+```html
+<svg viewBox="-1 0 263 502" width="100%" role="img"
+     aria-label="State the flow in words, node by node, including the loop and the exit."
+     style="display:block;width:100%;max-width:470px;height:auto;margin:0 auto 1.5rem;
+            font-family:Georgia,'Times New Roman',serif;font-size:13.5px">
+  <defs>
+    <!-- one arrowhead marker per figure; give it a page-unique id (fl-<slug><n>) -->
+    <marker id="fl-slug0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" style="fill:var(--color-muted)"/>
+    </marker>
+  </defs>
+  <g style="fill:none;stroke:var(--color-line);stroke-width:1">
+    <rect x="68" y="16" width="125" height="36" rx="6"/>       <!-- ordinary nodes -->
+  </g>
+  <rect x="16" y="450" width="230" height="36" rx="6"
+        style="fill:var(--color-fg);stroke:var(--color-fg)"/>  <!-- the ONE emphasis node: ink-filled, inverts in dark -->
+  <g style="stroke:var(--color-muted);stroke-width:1.5;fill:none">
+    <line x1="131" y1="52" x2="131" y2="78" marker-end="url(#fl-slug0)"/>   <!-- edges carry the marker -->
+  </g>
+  <g text-anchor="middle">
+    <text x="131" y="38.3" style="fill:var(--color-fg)">Ordinary node</text>
+    <text x="131" y="472.3" style="fill:var(--color-bg)">The payoff (on the ink node)</text>
+  </g>
+  <!-- edge labels ride a bg-colored halo so the line doesn't cut through them -->
+  <g text-anchor="middle" style="fill:var(--color-muted);font-size:12px;
+       stroke:var(--color-bg);stroke-width:3;paint-order:stroke">
+    <text x="131" y="319">what I did instead</text>
+  </g>
+</svg>
+```
+
+### Non-negotiables (flow)
+
+- **Theme tokens, never hex.** `--color-fg / --color-bg / --color-line / --color-muted` only. This is
+  what makes it invert in dark; a hardcoded palette (the data-viz trick) would strand it light.
+- **`role="img"` + an `aria-label` that narrates the whole flow** in words, node by node, including the
+  loop and the exit. The label *is* the accessible figure, and it doubles as the AI-legible version.
+- **One emphasis node.** Exactly one node is ink-filled (`fill:var(--color-fg)`, label in
+  `--color-bg`), the flow's payoff. If two nodes are "the point," neither is. This is the flow's
+  equivalent of the data-viz single accent.
+- **One arrowhead marker per figure, id `fl-<slug><n>`.** Marker ids are document-global, so a page
+  with several flows needs distinct ids or they cross-reference. Slug from the note.
+- **Edge labels get a `--color-bg` halo** (`stroke:var(--color-bg);paint-order:stroke`) so an arrow
+  never strikes through the text.
+- **Size to the content.** Unlike data-viz (a fixed 620 measure), a flow's `viewBox` and `max-width`
+  fit the diagram; keep `width="100%"`, `height:auto`, and center it (`margin:… auto`).
+- **Self-contained, no `<style>`, no script inside the figure**, same as data-viz, including the
+  upgrade rule above: a flow may be enhanced by an island, never replaced by one.
+
+## The reference figures (built to this standard)
+
+All live in [`ten-times-zero.md`](/notes/ten-times-zero). Data-viz: the **docs-vs-code
+ratio** bar, the **multiplier** (two rows, same AI, different baseline), and the **sprint timeline**
+(31 ticks). Flows: the **playbook loop** and the **mistakes-as-measurement loop** in the same file, plus
+the one-door flow in [`whitepaper-one-vocabulary.md`](/notes/whitepaper-one-vocabulary) and
+the loop diagrams across the other notes. Copy the nearest one for the shape you need, then re-label.
+
+## Rendering reality (know this before you build)
+
+Inline SVG renders everywhere the site serves, today, with zero dependencies. That is the whole reason
+both scaffolds are SVG.
+
+| Context | inline SVG |
+|---|---|
+| VSCode markdown preview | yes |
+| GitHub.com markdown viewer | **stripped** (commit a `.svg` as an image if a figure must show there) |
+| **MILL / the published site** | yes |
+
+**Mermaid (renders since 2026-08-16, and it owes a label).** A `mermaid` fenced block renders in the
+VSCode preview and on GitHub, and MILL now also renders it to inline SVG server-side. The line this
+standard used to carry, that the capability was considered and is not planned, was true when it was
+written and stopped being true when mill shipped it. The rule that replaced it is narrower and it is
+about access, not about mermaid: **a generated diagram has to carry the same accessible name a
+hand-drawn one does.** Write it on the fence itself:
+
+```
+```mermaid label="BATCH serves the request, GRAIN dresses it, MILL renders the Markdown"
+```
+
+MILL puts that sentence on the SVG root as `role="img"` plus `aria-label`, which is exactly what the
+flow scaffold's non-negotiable above asks for. Leave the label off and the fence does not render: it
+is refused, it warns, and it degrades to a code block. The old blanket sentence, that nothing under
+Tjakoen's byline publishes as mermaid, no longer holds. What holds is that nothing publishes as an
+unnamed figure.
+
+**A host that serves them owes a committed cache and a gate.** The rendering needs a browser, and a
+deploy usually has none, so the picture is rendered once on the machine that authored it and the SVG
+is committed beside the Markdown. The site then serves from that cache and never launches anything.
+The failure this guards against is silent in both directions: a missing cache entry and a missing
+label both degrade to a code block, and a page that publishes raw diagram source looks finished from
+every angle except a reader's. So the gate fails the build on either, rather than leaving it to be
+noticed. The portfolio's lives in its tools directory as the diagram cache gate, wired into its export
+verifier, and the worked example is the layer chain on the MILL architecture page.
+
+---
+
+*A projection of how the stack already thinks (tokens, DRY, design-tells-the-truth) applied to
+pictures. Update it when the figure language evolves, not the other way around.*

@@ -1,0 +1,415 @@
+---
+name: session-loop
+description: "Read this BEFORE orienting in a repo you have not worked today, and again BEFORE writing an agent-memory entry, a handoff prompt, or a plan file. It owns the inside of one session: how to orient cold, the loop to repeat, the recurring chores, what belongs in memory versus a committed doc, and how to end so the next session starts oriented. LOOP.md is the sibling that owns the gates across sessions and repos. Don't skip because you already have the context - context is the exact thing the next session will not have."
+---
+
+<!-- pantry:skills-sync -->
+> Generated view of `standards/SESSION-LOOP.md` in the portfolio canon. Edit it there, not here:
+> `pantry skills sync` rewrites this file and any local edit is lost. Relative links below
+> resolve from `standards/`.
+
+# The working loop, memory, and handoff
+
+How a session with an AI actually runs, start to finish: how it orients, the loop it repeats,
+what it writes down so the next session inherits it, and how it hands off. Portable — drop it into
+any repo alongside [`AI-DEVELOPMENT.md`](AI-DEVELOPMENT.md).
+
+> Split of responsibility: **[`AI-DEVELOPMENT.md`](AI-DEVELOPMENT.md) owns the standards** — the
+> working relationship, the definition of done, the conventions every change is held to. **This file
+> owns the mechanics** — the session lifecycle, the memory format, the handoff. When they overlap,
+> AI-DEVELOPMENT wins on *what good work is*; this file wins on *how a session moves through it*.
+> Don't restate the standards here, point at them.
+>
+> One floor up: **[`LOOP.md`](LOOP.md) owns the system *around* the sessions** — the work-triggered
+> heartbeat, the shared kit shape, and the accountability contract that spans a whole estate of repos.
+> This file owns one session; LOOP owns how the sessions add up. The session-start doctor step (§1) and
+> the recurring chores (§3) are this file's end of LOOP's heartbeat.
+
+---
+
+## 1. Session start (orient before you touch anything)
+
+1. **Read the room.** Load this repo's `CLAUDE.md`/`AGENTS.md`, then only the standards the task
+   actually needs (the [`standards/README.md`](README.md) index exists so you fetch the one doc, not
+   all of them). Note each section you open and each graph query you run as you go: the run report
+   lists them under consulted, and the list is easy to keep while reading and hard to rebuild from
+   memory at the end (→ [LOOP](LOOP.md) §4a).
+2. **Recall, then verify.** Read any prior memory/decision record. Treat it as a *cache, not truth* —
+   if a recalled fact names a file, flag, or function, confirm it still exists before you rely on it.
+   Code wins over any memory (→ AI-DEVELOPMENT §1).
+3. **Orient from the graph, not a cold read.** If the repo has a knowledge-graph index (graphify;
+   AI-DEVELOPMENT §4), query it to place the work before grepping raw files.
+4. **Check for answers you did not ask for.** A question an earlier session raised may have been
+   answered while nothing was running, and the session that reads the answer is rarely the one that
+   asked. Read the repo's pending answers before starting new work, act on what is now settled, or
+   say plainly that it is being deferred (→ [DECISIONS](DECISIONS.md) §4). Usually there is nothing
+   there, and it costs one file read to know. The doctor you run in step 3's neighbourhood already
+   counts them, so this step is normally reading a line you have, not opening a file you have not
+   (→ [LOOP](LOOP.md) §2). Whichever you did, ack what you acted on: an unacked answer reads to the
+   next session as one nobody has seen.
+5. **Restate the goal in one line.** What "done" means for *this* task, and the non-negotiables you
+   were handed. If that line is fuzzy and the choice is genuinely the human's, ask once — with a
+   recommendation, not a survey. Which surface that ask belongs on is DECISIONS §1; in a session
+   someone is watching, the chat is almost always right.
+6. **Open your own tree before you edit.** The unit is one worktree per session, matching the
+   unit work is attributed to: a dirty tree is not automatically yours. A session that will only
+   read can stay in the main checkout. A session that will edit code opens its own worktree
+   first, so two sessions never mutate the same tree and neither one's `git status` hides the
+   other's diff (→ [LOOP](LOOP.md) §2). The harness offers `EnterWorktree`; where it does not,
+   `git worktree add` before the first edit. If you are already several edits into a shared tree,
+   finish the piece in flight and open the next session in its own, rather than moving a dirty
+   tree mid-run.
+
+---
+
+## 2. The loop (repeat until done)
+
+The problem→solution loop lives in **AI-DEVELOPMENT §6**; the standing gate is **§3/§8**. The
+session mechanics around them:
+
+1. **Act when the info is there.** Don't re-ask what's answered or re-litigate a settled call.
+2. **Write the prediction before you ask.** On any ask that matters, put one line down first saying
+   what you expect the answer to be. A confident, well written response is an anchor, and a written
+   prediction is the only thing it can be compared against afterwards; without one the answer just
+   becomes the conclusion. The habit is Addy Osmani's, from [Critical thinking when agents do the
+   work](https://www.linkedin.com/posts/addyosmani_ai-programming-softwareengineering-share_7524690987357470720-cLIK/):
+   form a hypothesis before asking, and in unfamiliar ground ask for a blind spot pass instead of an
+   opinion. One line is enough, because a prediction nobody can check is a diary entry.
+3. **Report at load-bearing moments**: a plan before a big move, an honest status after (what
+   passed, what was skipped, what's still red). No "done!" when it isn't.
+4. **Hit the gate before you call anything done**: typecheck + tests + docs synced + diff read.
+   The full checklist is AI-DEVELOPMENT §8; run it, don't paraphrase it.
+5. **The gate is also the commit trigger.** Once it's green, commit (see §3 below). Don't leave
+   finished, verified work sitting uncommitted.
+6. **A commit is the cheapest place to start over.** When the unit that just landed and the unit
+   about to start have nothing to do with each other, the second one belongs in a fresh session. Not
+   because the thread is long, which is what §5's warn line measures, but because everything the
+   first task loaded is now carried into the second and re-read on every turn of it, and none of it
+   is about the new problem. The two triggers are different questions and either one alone leaves a
+   real case uncovered: a session can cross four unrelated tasks without ever getting long, and a
+   session can grind one task until it is enormous. Same-subject work continues here; a genuinely
+   different job starts clean, which is the handoff in §5 rather than a decision to make twice.
+
+---
+
+## 3. Recurring chores (the things done every time)
+
+These fire on a trigger, not on being asked. Standardize them so no session forgets:
+
+| Trigger | Do, every time |
+|---|---|
+| Behavior changed | Add/adjust the test at the right tier *as you build*, not after. |
+| Something that renders changed | Leave a CRUMB dev tour: one step per changed surface, what moved, and a verify line the reviewer can run. The rule and its limits are LOOP §4a. No rendered surface, no tour. |
+| About to say "done" | Run the green gate (AI-DEVELOPMENT §8). Red gate = stop-the-line. Where the repo runs a plans board, `proof verify` reads the diff against the plan's `touches`. |
+| Gate green on a real change | Commit — `type: imperative summary`, body only when the *why* isn't obvious. No AI-attribution trailers. Branch off main for anything non-trivial. |
+| A non-obvious decision got made | Write a memory (§4). |
+| A repeatable task finished | Emit a handoff (§5). |
+
+**Commit/push and anything outward-facing stay human-gated.** Commit only when the gate is green
+*and* committing is in scope; push only when asked.
+
+---
+
+## 4. Self-learning: memory (so the next session doesn't relitigate)
+
+The point of memory is that **a lesson is learned once**. When a real decision gets made, or
+something non-obvious gets discovered, write it down; the next session (human or AI) starts where
+this one ended instead of rediscovering it.
+
+**What earns a memory:** a decision and its *why*; a non-obvious constraint the code doesn't show; a
+recurring pitfall and its guard; a pointer to an external resource. **What doesn't:** anything the
+code, git history, or `CLAUDE.md` already records; anything that only matters for this one
+conversation.
+
+**Where it lives** depends on durability:
+- **Durable, repo-worthy rule** (a convention everyone must follow) → it belongs *in the repo*:
+  `CLAUDE.md`, a `CONVENTIONS.md`, or a `docs/DECISIONS.md`. Committed, reviewed, permanent.
+- **Session-to-session context** (in-flight state, a working assumption, a "trust the code over
+  this") → the agent's own memory store if it has one (Claude Code keeps per-project memory outside
+  the repo). Durable across sessions, but not code.
+
+**The format** (one fact per entry, so recall stays scoped):
+
+```markdown
+---
+name: <short-kebab-case-slug>
+description: <one line — this is what a future session reads to decide if the entry is relevant>
+type: decision | constraint | pitfall | reference
+---
+<The fact. For a decision or pitfall, follow with **Why:** and **How to apply:**.
+Link related entries with [[their-slug]] so the web is navigable.>
+```
+
+**Keep an index.** One line per entry — `- [slug](file) — one-line hook` — in a single index file
+(`MEMORY.md` for the agent store; the doc's own table if it's in-repo). The index is what gets
+scanned every session; the entries are fetched only when the hook matches. Same "load only what you
+need" move as the standards index itself.
+
+**Maintenance:** before writing, check for an entry that already covers it and update *that* rather
+than forking a second copy. When a memory turns out wrong, fix or delete it — a stale memory that
+contradicts the code is worse than none. Convert relative dates to absolute ("today" rots).
+
+**The dream, when the store is due one.** Writing forward leaves the store full of facts that were
+true on the day they were written, and no session ever reads it backwards. That pass is the dream: the
+run reports and the session transcripts are exported as text, one analyzer distills each one, and one
+organizer rewrites the index with dated supersession. It is a judgment, so LOOP §2b keeps it off any
+schedule. The check is dull on purpose: the dream due command prints a line when enough has landed
+since the index was written, the close gate raises that line once, and the owner decides. The method,
+the two prompts and the guardrails live in the portfolio's memory-dream plan, which is also where the
+tool lives; the credit for the pattern is recorded in LOOP §5.
+
+---
+
+## 5. Handoff (end a session so the next one starts cold-but-oriented)
+
+When a bounded task finishes — a feature landed, the gate green, the commit made — don't just stop.
+**Make the state durable, then emit a compact handoff prompt** the human can paste into a fresh
+session (or hand to a parallel one). This is the "send me a prompt to hand off after a specific task
+finishes" standard.
+
+A handoff is worth emitting when: a self-contained task completed, or the session is long enough that
+a fresh context would be cheaper and clearer than continuing (long threads drift and cost more per
+turn), or the *next* step is genuinely a different job (e.g. "code landed → now write the note").
+
+**One of those is not a judgment call, and it was made hard on 2026-08-19 because the judgment
+version does not fire. Bounded work in a sibling repo is ALWAYS a spawn.** If the next piece is
+scoped, and it lives in a repo other than the one this session is working in, it gets its own
+session and its own envelope. No weighing, no asking, no finishing it here because it looks small.
+
+The measurement that made it a rule, taken across the whole session store: **21 handoffs in 454
+sessions, which is 4.6%, and 20 of those 21 are in one repo.** Mean session length runs from 605 to
+920 messages depending on the repo, and the longest is 11,396. The machinery had existed for weeks.
+So the advisory version above, which is the wording that governed all 454, produces a marathon and a
+sibling repo edited from inside a session that was working on something else.
+
+The reason it fails is worth naming, because it is not laziness and a reminder will not fix it. The
+cost of handing off lands NOW, on the session, as a brief that has to be written. The cost of not
+handing off lands LATER, on the reader, as work buried in a thread they cannot see the shape of. Any
+rule that leaves that trade to the session at the moment of the decision resolves the same way every
+time. So it is not left to the session.
+
+**Before emitting, make state durable:** gate green, work committed, decisions written to memory
+(§4). A handoff that points at uncommitted, untested work is a trap. Treat this as a precondition
+rather than a reminder, which means it is checked and not recited: the same turn-end hook that
+reports the window is filling reports alongside it whether the tree is clean, whether anything is
+unpushed, and whether the gate is green. A trigger that tells a session to make its state durable
+without naming what is currently undurable is giving advice, and advice is what gets nodded at.
+
+**The handoff prompt contains, tightly:**
+- **Where things stand** — what just landed, what's committed, gate status.
+- **The next task** — one clear goal, stated as intent (the *why*), not just a task.
+- **The map** — the 2–4 files/docs the next session should read first (and *only* those, so it
+  doesn't cold-read the repo).
+- **The traps** — anything non-obvious that will bite: a constraint, a flaky step, a decision already
+  made so it isn't reopened.
+- **The right model for the next job** — see §6.
+
+If the harness has a handoff generator (Claude Code exposes a `/handoff` skill), use it; the shape
+above is what it should produce. If not, write the prompt by hand to that shape.
+
+**Summarise before you walk away, not after.** Where the harness can compact a conversation down to
+a summary and carry on (Claude Code's compact command), the cost of doing it depends on something invisible
+from inside the session: the prompt cache behind the conversation is still warm for a short while after the
+last turn, and once it has expired the same compaction re-reads the whole thread from cold. So the
+cheap moment to compact is the moment you are stepping away, and the expensive one is the moment you
+come back. The window is generous on a subscription and short on an API key, which is worth knowing
+because it decides whether "I will do it when I sit down again" is free or not. This is a habit no
+check can see: a session cannot know whether a person is leaving, so nothing here fires it for you.
+
+**The "long enough" half is measurable, so measure it rather than feeling it.** Claude Code writes a
+`usage` block on every assistant turn of its transcript, and the input side of the newest one is the
+context the session is actually carrying. That makes the second trigger above a number, not a hunch,
+and it belongs on the turn-end hook with the rest of the mechanical tier (LOOP §2). Two things to get
+right, because both have already been got wrong here. Count the cached reads: once the cache is warm
+the raw `input_tokens` field is single digits, so a reader that trusts it reports a full session as
+empty. And measure the window before setting a line in it: the remembered figure for a context limit
+is usually an older model's, and a threshold set there fires halfway through an ordinary session.
+
+The trigger is built rather than proposed: a reader that tails the transcript, called from the
+PostToolUse hook in a quiet mode that prints nothing until the reading crosses the warn line. It
+belongs at machine level rather than in any one repo, and so does the durable-state check beside it,
+because neither is about the repo it runs in: one reads a transcript, the other reads git. Wired once
+in the agent config, every repo on the machine inherits both, and the config being a repo of its own
+is what carries the trigger to a second device. A per-repo copy is the version that covers one repo
+today and
+becomes three drifting copies later.
+
+The defaults are the measurement and not a memory, and the two lines deliberately answer different
+questions. The stop line is a fact about the window: 900k of the 1M this model carries, past which
+continuing risks losing work. The warn line is a judgment about productivity, and it sits far lower,
+at 200k. A thread longer than that starts re-litigating decisions it already made, and every turn
+re-reads a prefix that only grows, so handing off there buys sharpness rather than survival. The gap
+between the two is the point. A session may sail past the first line for good reasons, and one that
+did exactly that produced this paragraph; no session should sail past the second.
+
+Both are overridable per run, which is also the only way to watch the trigger fire without waiting to
+fill a window, so a repo adopting it can confirm it works on the day it lands instead of hoping.
+Re-measure before trusting either number anywhere else, because they describe one model on one
+machine, and check the window rather than recalling it: the remembered figure for a context limit is
+usually an older model's, and both of these numbers mean something different against a smaller one.
+
+One exclusion is worth stating out loud, since a machine-level hook runs everywhere by definition:
+any path that is off limits stays off limits, and a check that only prints is still contact. The
+guard excludes it by prefix before it reads anything at all, including git.
+
+Whatever the trigger, **the handoff is emitted by default, and the session opens the next one
+itself.** Run it through LOOP §4b: a sibling session is reversible (close it) and inward-facing (it
+writes nothing anyone else can see), so the thing standing between a session and its successor is
+durable state, not permission. A session that stops to ask at the point its window is filling is
+spending the room it has left on the question.
+
+**What the successor may be handed is the piece of work in flight, and nothing else.** The chain ends
+when that piece is done, not when the plans run dry. This is the whole bound, and it is what separates
+a handoff from an agent that runs the backlog: picking up something new is a decision with a human in
+it, and a session that finishes its task hands the choice back rather than helping itself to the next
+one.
+
+Handing off early is worth more than it looks, for a reason that has nothing to do with running out of
+room. **A new session runs this whole file from the top.** It orients, reads the plans, runs the
+doctor, meets the gates cold. A thread that keeps going instead skips every one of those, because it
+already did them once and remembers doing them. So the choice at the warn line is not "continue, or
+lose context" but "continue with the checks behind me, or continue with them re-run", and the second
+is the one that catches the thing that changed underneath.
+
+There is a mechanical limit worth knowing before designing around it, because it is easy to plan a
+trigger that cannot exist, and easy to read the limit as bigger than it is. **The thing that detects
+the moment and the thing that can act on it are not the same process.** The trigger is a shell hook,
+and spawning a session is a tool the model holds, so the hook cannot reach it. That rules out one
+design and only one: a hook that spawns. It does not rule out the loop, because the hook's output is
+read by the thing that does hold the tool. The honest shape is the hook naming the moment and the
+model acting on it, and the hook's text is therefore the only channel that instruction has. Write it
+as an instruction rather than as a note, and hold it with a test, because a reword that softens it
+turns the loop back into a copy and paste without anything going red.
+
+**Which hook event, though, is the part that decides whether any of this happens at all, and it is
+not the obvious one.** The turn-end event is where a fill check belongs by intuition, and it is the
+wrong place: at exit 0 its output goes to the transcript, for a person, and never enters the next
+turn's context. There is no third exit code. The one that does block reaches the model by refusing to
+let the session stop, which is a trap rather than a channel. So a turn-end hook can tell the human
+the window is filling and it cannot tell the session, and an instruction written there is addressed
+to a reader who cannot act on it. The event that reaches the model is the one that fires after a tool
+call and can return context with its result. That is also better timing, since it fires while the
+session is working rather than as it stops.
+
+Two consequences fall out of that choice and both have to be designed for. It fires often, so the
+expensive read needs a cheap gate in front of it: re-read only once the transcript has grown enough
+to change the answer, and stat the file the rest of the time. And a verdict gets announced once, not
+on every call, because a line that repeats is noise and noise is how a gate gets muted (LOOP §7).
+
+None of this is guessable from documentation, and the estate has now got it wrong once in each
+direction: a trigger written on the turn-end event that could not be received, and before that a
+conclusion that the loop was impossible because that one event could not spawn. **Probe the channel
+before writing the instruction into it.** One throwaway hook that emits a nonce and one tool call is
+the whole test, and it is cheaper than either mistake.
+
+This estate runs on Nimbalyst, whose `spawn_session` opens the next session as a sibling in the same
+workstream, inheriting the working directory and the model. Nothing committed here depends on that:
+the standard states the capability, a session either has it or does not, and the tool is named as the
+example rather than the requirement. On a harness without it the brief is the deliverable and the
+human opens the tab, which is the same loop with one more step and no less rigour. A scheduler is a
+third shape and a worse one for this job. It fires whether or not there is work, where a handoff
+fires because a piece of work outgrew its session, and only the second one is a loop rather than a
+clock.
+
+---
+
+## 6. Model economy (be smart about which brain runs)
+
+Choose the cheapest capable configuration for the work, counting the whole collaboration rather
+than the price of one call. The main session owns the plan, integration and reconciliation. A child
+receives a bounded task, the evidence it needs, and a fixed return format.
+
+| Work | Routing |
+|---|---|
+| Uncertain planning, architecture, difficult debugging and consequential review | A strong reasoning model; preserve judgment quality. |
+| Settled implementation, wiring and tests | A capable execution model with enough reasoning for the contract. |
+| Bounded location and extraction | The cheapest capable model, after a graph query has failed to answer the question. |
+
+Which role sits on which tier, the main session's tier and escalation by delegation are in [MODELS.md](MODELS.md).
+
+**Pin the route when the harness supports it.** This applies to Codex as well as Claude Code.
+Verify supported model identifiers and reasoning settings against the installed harness before
+configuring role files. A role name alone does not select a cheaper model. When a child inherits the
+parent's configuration, report that inheritance rather than claiming a tier saving. Keep the owner's
+main-model choice; recommend a phase change when useful rather than silently replacing it.
+
+**Budget context as well as models.** Prefer a fresh child with a compact task envelope over a fork
+of the whole conversation when it needs only a few files. Give it the constraints and decisions it
+cannot recover, and require a bounded answer with file and line evidence. Query the graph first,
+load only the relevant standard sections, and avoid large tool dumps. Sequential, stateful work
+usually belongs inline; delegation must earn its coordination cost.
+
+**Measure the total cost.** Input, output, reasoning, retries, duplicated context and integration all
+count. Account for cache behavior and the harness's billing or subscription limits using current
+evidence; a lower tier or a late model switch is not automatically cheaper. Compare completed,
+verified work rather than isolated token prices. Escalate when the cheaper route cannot meet the
+contract, and keep consequential verification independent of the author. Model identifiers and
+prices belong in verified configuration, not in this portable rule.
+
+
+**Measured 2026-08-22, and the rule above had never once fired.** Twelve sessions in the portfolio:
+2,492 assistant turns, every one on the main thread at the top tier. Turns that ran in a subagent:
+**zero**. The table, the pinning advice and the switch-cost warning were all written, all correct,
+and all inert. That is the same shape the graph standard was in before anything enforced it, and it
+is why `delegate-gate.sh` now exists (HOOKS.md §4b): after fifteen reads or searches in a session
+with nothing delegated, it says so once, and goes permanently quiet the moment the session delegates
+anything.
+
+**The same measurement shows why context matters.** Cache reads were 94.3 percent of all input
+in those measured sessions, 355 million read against 1.9 million generated. That historical result
+motivates bounded retrieval and compact child returns; it is not a current price comparison or a
+promise that every harness bills the same way. A child's separate context can keep a large read out
+of the main conversation when only its conclusion is needed.
+
+Carry the model recommendation into the handoff (§5): the next task's shape usually implies its tier.
+
+---
+
+## 7. Delegation (fan out, don't grind)
+
+§6 asks which brain runs. This asks how many. The default is wrong in one direction far more often
+than the other: a session grinds through work serially that it could have handed to four subagents,
+because delegating feels like overhead right up until the point it obviously was not.
+
+**Fan out when the work is wide and the answer is small.** Reading twelve files to answer one
+question, auditing four repos against one rubric, checking a convention across every call site,
+drafting three independent approaches to compare. The main thread eats a compressed result instead of
+the file dumps, which is the same win as §6 from a different angle.
+
+**Stay inline when the work is deep and stateful.** A single tricky fix, anything where each step
+depends on what the last one found, anything touching files another agent is already in. Delegation
+buys parallelism, and parallelism costs coherence.
+
+**What a subagent prompt owes** (a vague one comes back vague, and the round trip is wasted):
+
+- **A bounded scope, named as paths.** Which files are yours, which explicitly are not. Overlapping
+  scopes produce duplicate work and findings that have to be merged by hand.
+- **Read-only stated outright when it is read-only.** Parallel agents writing to one tree is how a
+  fan-out becomes a merge conflict.
+- **The full rubric or question, not a slice.** An agent asked only about types reports only types,
+  including in the file where the real problem was something else.
+- **The output format, fixed.** Same columns from every agent merges for free. Prose from six agents
+  gets re-read and re-typed by the main thread, which is the cost the fan-out was supposed to avoid.
+- **Evidence rules.** Cite `file:line`, no speculation. Without that line, a subagent will happily
+  return something plausible, and plausible is the failure mode that survives review.
+- **The context it cannot see.** It starts cold. Name the repo's `CLAUDE.md`, the constraint, the
+  decision already made, or it will rediscover them badly.
+
+**Merging is the main thread's job**, and it is real work: de-duplicate across scopes, rank, drop
+whatever came back without evidence, and reconcile two agents that disagree by reading the code
+yourself. A subagent result is a claim, held to the same bar as any other (AI-DEVELOPMENT §1).
+
+**You will delegate more when you can see it happening.** A fan-out that reports only at the end is
+trusted less than one whose agents are visible while they run, and less trust means smaller
+delegations than the work deserves. That is a property of the harness rather than the standard, so
+the standard states the requirement and not the product: prefer a setup that shows subagents and
+parallel sessions as they work, and that groups related sessions rather than leaving one flat list to
+scan. This estate gets it from Nimbalyst, which puts sibling sessions in a workstream with their
+tabs and their edited files together. Where a harness does not offer it, ask for narrower fan-outs
+and a fixed output format, since the format is what buys back the confidence the view would have.
+
+The audit is the worked example of all of this: [`AUDIT-STANDARD.md`](AUDIT-STANDARD.md) §4.
+
+---
+
+*Living document. When the loop changes, update it — the same rule it asks of everything else.*

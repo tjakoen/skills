@@ -1,0 +1,183 @@
+{
+  "name": "tjakoen-skills",
+  "version": "1.0.0",
+  "description": "The standards Tjakoen works by, mounted as skills an agent loads when the task fits.",
+  "generatedFrom": "https://github.com/tjakoen/tjakoen.github.io/tree/main/standards",
+  "generatedBy": "tools/skills-library.ts --publish",
+  "skills": [
+    {
+      "name": "ai-development",
+      "title": "AI-DEVELOPMENT.md — how I build full stack with AI",
+      "description": "A portable playbook for building with an AI partner - the standards, the pitfalls, and how problems become solutions.",
+      "path": "skills/ai-development/SKILL.md"
+    },
+    {
+      "name": "ai-repo-standard",
+      "title": "AI-REPO-STANDARD.md",
+      "description": "Structure a repo so AI sessions compound. The repo-side companion to AI-DEVELOPMENT, with the map, contracts, and guardrails that carry learning between sessions.",
+      "path": "skills/ai-repo-standard/SKILL.md"
+    },
+    {
+      "name": "audit-standard",
+      "title": "AUDIT-STANDARD.md — how a repo gets audited",
+      "description": "The whole-repo audit - the nine dimensions it looks at, the severity words, the subagent fan-out that runs it, and the report it owes.",
+      "path": "skills/audit-standard/SKILL.md"
+    },
+    {
+      "name": "brief",
+      "title": "BRIEF.md — a run talks to the person, not about the work",
+      "description": "The shape of anything a run says to Tjakoen instead of to the code - the ask first, every step a runnable one carrying its prompt, a link to whatever is running, bullets for detail, a table or a figure when the data has a shape, and the words he already uses. One shape on every harness and every surface.",
+      "path": "skills/brief/SKILL.md"
+    },
+    {
+      "name": "claude.starter",
+      "title": "CLAUDE.starter.md — the new-repo starter template",
+      "description": "The template every new repo copies to wire itself into these standards from day one - reference them, don't fork them.",
+      "path": "skills/claude.starter/SKILL.md"
+    },
+    {
+      "name": "commit-standard",
+      "title": "COMMIT-STANDARD.md — the commit message standard",
+      "description": "How a commit message is built in every repo - a gitmoji, a one-line title, then bullets saying what the commit did.",
+      "path": "skills/commit-standard/SKILL.md"
+    },
+    {
+      "name": "conformance",
+      "title": "CONFORMANCE — the prompt that checks a repo is wired, not just willing",
+      "description": "A paste-in prompt that runs in any existing repo and reports whether the standards are wired, the links resolve, the audit runbook is real, and the loop is automated rather than remembered.",
+      "path": "skills/conformance/SKILL.md"
+    },
+    {
+      "name": "dashboard",
+      "title": "DASHBOARD.md — a dashboard tells you what to do next",
+      "description": "The dashboard standard - how Tjakoen wants a dashboard built, from the head that states its baseline to the queue that names one action per row. It composes GRAIN's dashboards layer rather than inventing a grid, keeps colour to the theme's one accent, and is checked on a screenshot at a phone and a desktop width before anyone calls it done.",
+      "path": "skills/dashboard/SKILL.md"
+    },
+    {
+      "name": "decisions",
+      "title": "DECISIONS — how a run reaches the human, and how the answer comes back",
+      "description": "The four ways a run asks for something it cannot decide alone, what picks between them, what a decision request has to contain, and the one channel an answer returns on so a session that did not ask can still act on it.",
+      "path": "skills/decisions/SKILL.md"
+    },
+    {
+      "name": "design-standard",
+      "title": "DESIGN-STANDARD.md — design artifacts that stay true to the code",
+      "description": "The design standard - which planning artifacts a project keeps in its design folder (ERD, data dictionary, DFD, C4, user flows, wireframes, ADRs, traceability), the established method each one follows, which are generated from code and which are written by hand, when a plan owes one, and how tests close the loop. PANTRY renders the files; the files are the truth.",
+      "path": "skills/design-standard/SKILL.md"
+    },
+    {
+      "name": "figures",
+      "title": "FIGURES.md — figures & visualizations",
+      "description": "The standard for every diagram and chart - HTML when a figure has state, two tokenized inline-SVG scaffolds when it does not, one palette each, and a generated diagram carries the same accessible name a hand-drawn one does.",
+      "path": "skills/figures/SKILL.md"
+    },
+    {
+      "name": "glossary",
+      "title": "GLOSSARY — the words this estate uses, so a session spends fewer tokens decoding them",
+      "description": "The working vocabulary of the portfolio and the loop around it: desk, door, surface, intent, grade, grain, lane, envelope, brief, run report, handoff, claim. One line each, the word as it is used here rather than as the framework invented it, so a cold session can read a plan or a note without inferring the meaning from context.",
+      "path": "skills/glossary/SKILL.md"
+    },
+    {
+      "name": "graph",
+      "title": "GRAPH.md — navigate the code by graph, not by fan-out",
+      "description": "The retrieval standard - ask the code graph a scoped question before you fan out grep, reads, and subagents. A small structured answer instead of a pile of files, and a free hook that keeps the graph honest.",
+      "path": "skills/graph/SKILL.md"
+    },
+    {
+      "name": "hooks",
+      "title": "HOOKS.md — the gates that fire before you do",
+      "description": "The machine-level hooks that enforce parts of the loop on every session in every repo - what each one fires on, what it deliberately cannot do, how to turn it off, and the adapter contract that holds Claude Code, Codex and DeepSeek Harness to the same six signals with a ten-case conformance list.",
+      "path": "skills/hooks/SKILL.md"
+    },
+    {
+      "name": "intake",
+      "title": "INTAKE — turning a pasted blob into a scoped brief",
+      "description": "The four questions a pasted document has to answer before a session starts spending, why the answers are confirmed by a person rather than inferred from the blob, where the brief lands, and the test for when no brief is needed at all.",
+      "path": "skills/intake/SKILL.md"
+    },
+    {
+      "name": "kickstart",
+      "title": "KICKSTART — the new-project prompt for the BREAD stack",
+      "description": "Paste one prompt into your AI and it interviews you, learns the stack, reads the public repos, and proposes which BREAD layers your project needs and how to wire them.",
+      "path": "skills/kickstart/SKILL.md"
+    },
+    {
+      "name": "local-ai-standard",
+      "title": "LOCAL-AI-STANDARD.md",
+      "description": "Choose, measure, and tune browser-local AI around real user tasks, with explicit limits and repeatable evidence.",
+      "path": "skills/local-ai-standard/SKILL.md"
+    },
+    {
+      "name": "loop-standard",
+      "title": "LOOP.md — one AI workflow across every repo",
+      "description": "The system around the sessions - how every repo is worked the same way, the heartbeat that makes skipped chores visible, and the contract that keeps an unattended run honest.",
+      "path": "skills/loop-standard/SKILL.md"
+    },
+    {
+      "name": "main-flow",
+      "title": "MAIN-FLOW — the spine of one piece of work, from an idea to a closed session",
+      "description": "The seven stages every substantial piece of work moves through in this estate, the standard that owns each one, the artifact it leaves behind, and the gate that proves the stage is done. It is the ordered view of the library: the other standards say how a stage is done, and this one says which stage you are in and what it owes before the next one starts.",
+      "path": "skills/main-flow/SKILL.md"
+    },
+    {
+      "name": "models",
+      "title": "MODELS — which model plays which role, on every harness",
+      "description": "The portable model policy of the loop. Six roles on three tiers, a main session on the execution tier, escalation by delegation rather than by switching models, the effort ceiling, one registry as the only home of model identifiers, five conformance levels, and how a device repairs its own drift.",
+      "path": "skills/models/SKILL.md"
+    },
+    {
+      "name": "models-verify",
+      "title": "MODELS-VERIFY — the copy-paste prompt that proves the model policy on one harness",
+      "description": "A prompt the owner pastes into a fresh session on Claude Code, Codex, DeepSeek Harness or OpenCode. The session runs the verifier for its harness, then the five probes a script cannot run (its own model, an unenveloped spawn, delegation to the planner, a 16-hex canary that proves a goldfish is fresh, and a human-lane write), and files a dated run report.",
+      "path": "skills/models-verify/SKILL.md"
+    },
+    {
+      "name": "note-standard",
+      "title": "NOTE-STANDARD.md — the note / blog-post standard",
+      "description": "How a note is put together - frontmatter, structure, the sign-off footer, plus a reusable drafting prompt.",
+      "path": "skills/note-standard/SKILL.md"
+    },
+    {
+      "name": "prompt",
+      "title": "PROMPT — what a prompt owes before the work starts",
+      "description": "The checks an opening prompt is held to and the short polish pass that fixes it at session start, plus the rules for the prompts that live in files (instruction files, skills, agent prompts) so they stop carrying debt older models needed.",
+      "path": "skills/prompt/SKILL.md"
+    },
+    {
+      "name": "readme-standard",
+      "title": "README-STANDARD.md — the README standard",
+      "description": "How a README presents itself across every repo - the title emoji, the badge row, and the footer, plus a reusable prompt.",
+      "path": "skills/readme-standard/SKILL.md"
+    },
+    {
+      "name": "session-loop",
+      "title": "SESSION-LOOP.md — the working loop, memory, and handoff",
+      "description": "How a session with an AI runs start to finish - the loop it repeats, what it writes down, and how it hands off.",
+      "path": "skills/session-loop/SKILL.md"
+    },
+    {
+      "name": "tour-standard",
+      "title": "TOUR-STANDARD.md — the review-tour standard",
+      "description": "How a CRUMB dev tour is built - picking surfaces, writing a verify line someone can run, stamping the status, and handing it over.",
+      "path": "skills/tour-standard/SKILL.md"
+    },
+    {
+      "name": "tree",
+      "title": "TREE.md — keep the root an index, not a junk drawer",
+      "description": "The layout standard - the repo root is the first screen an agent or a newcomer reads, so only load-bearing files earn a place there and everything else folds one level down into a named home. A lean root is cheaper to orient in and harder to get lost in.",
+      "path": "skills/tree/SKILL.md"
+    },
+    {
+      "name": "voice",
+      "title": "VOICE.md: voice and tone",
+      "description": "The standard for anything published in Tjakoen's name - cadence, the machine-tells to avoid, the honesty clause, and what a reader meets first.",
+      "path": "skills/voice/SKILL.md"
+    },
+    {
+      "name": "which-skill",
+      "title": "WHICH-SKILL — the router, so a cold session finds the one standard that governs the task",
+      "description": "One table from \"what am I about to do\" to \"which standard to load first\", covering every skill the estate mounts. It exists so a session does not read four standards looking for the one that fires, and so a standard nobody remembers is still reachable by the situation that needs it.",
+      "path": "skills/which-skill/SKILL.md"
+    }
+  ]
+}
