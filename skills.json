@@ -30,10 +30,10 @@
       "path": "skills/brief/SKILL.md"
     },
     {
-      "name": "claude.starter",
+      "name": "claude-starter",
       "title": "CLAUDE.starter.md — the new-repo starter template",
       "description": "The template every new repo copies to wire itself into these standards from day one - reference them, don't fork them.",
-      "path": "skills/claude.starter/SKILL.md"
+      "path": "skills/claude-starter/SKILL.md"
     },
     {
       "name": "commit-standard",
