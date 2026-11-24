@@ -31,7 +31,7 @@ two rows both look right, load the one whose rule you are about to break.
 |---|---|---|
 | Add, move or remove a table, column, policy, screen or data flow | [`DESIGN-STANDARD`](DESIGN-STANDARD.md) | ERD, dictionary, DFD, ADR, traceability |
 | Choose between two architectures, or scaffold a new project | [`KICKSTART`](KICKSTART.md) | Interview first, then pick the layers |
-| Write or restructure a `CLAUDE.md` | [`CLAUDE-STARTER`](CLAUDE-STARTER.md) | The template every repo copies |
+| Write or restructure a `CLAUDE.md` | [`CLAUDE-STARTER`](CLAUDE.starter.md) | The template every repo copies |
 | Change the machinery that carries knowledge between sessions | [`AI-REPO-STANDARD`](AI-REPO-STANDARD.md) | Sync tables, memory, the hardening ladder |
 | Hand a real build task to an AI | [`AI-DEVELOPMENT`](AI-DEVELOPMENT.md) | The bar a change is held to, and the recurring pitfalls |
 | Add a file to a repo root or a new top-level directory | [`TREE`](TREE.md) | Where things live, and what earns a root slot |
